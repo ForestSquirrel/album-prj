@@ -1,0 +1,44 @@
+<div class="search-fields-container">
+  <mat-form-field class="search-field" appearance="fill">
+    <mat-label>Title search</mat-label>
+    <input type="text" matInput [formControl]="titleControl" [matAutocomplete]="autoTitle"
+      placeholder="Some photo title">
+    <mat-autocomplete #autoTitle="matAutocomplete">
+      <mat-option *ngFor="let title of filteredTitles | async" [value]="title">
+        {{ title }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Selected hashtags</mat-label>
+    <mat-chip-grid #chipGrid aria-label="Hashtag selection">
+      <mat-chip-row *ngFor="let hashtag of selectedHashtags" (removed)="remove(hashtag)">
+        {{hashtag}}
+        <button matChipRemove [attr.aria-label]="'remove ' + hashtag">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip-row>
+    </mat-chip-grid>
+    <input placeholder="New hashtag..." #hashtagInput [formControl]="hashtagCtrl" [matChipInputFor]="chipGrid"
+      [matAutocomplete]="auto" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      (matChipInputTokenEnd)="add($event)" />
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      <mat-option *ngFor="let hashtag of filteredHashtags | async" [value]="hashtag">
+        {{hashtag}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</div>
+<div class="container">
+  <gallery id="test" imageSize="contain" [items]="items" thumbPosition="left" (itemClick)="onItemClick($event)">
+  </gallery>
+</div>
+
+<div class="lightbox">
+  <button mat-raised-button color="primary" (click)="lightbox.open(0)">Open as widget</button>
+  <button mat-raised-button color="accent" (click)="lightbox.open(0, 'lightbox', {panelClass: 'fullscreen'})">
+    Open in fullscreen mode
+  </button>
+  <button mat-raised-button color="warn" (click)="openUploadDialog()">Upload Photo</button>
+</div>

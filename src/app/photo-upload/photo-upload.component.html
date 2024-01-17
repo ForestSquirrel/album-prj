@@ -1,0 +1,49 @@
+<mat-horizontal-stepper orientation="vertical" #stepper *ngIf="!uploadComplete">
+    <mat-step [completed]="photoUploaded">
+        <ng-template matStepLabel>Upload Photo</ng-template>
+        <input type="file" (change)="onFileSelected($event)" />
+    </mat-step>
+
+    <mat-step>
+        <ng-template matStepLabel>Add Title</ng-template>
+        <mat-form-field class="stepper-list">
+            <input matInput placeholder="Title" [(ngModel)]="photoTitle">
+        </mat-form-field>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Add Hastags</ng-template>
+        <mat-form-field class="stepper-list">
+            <mat-chip-grid #chipGrid aria-label="Hashtag list">
+                <mat-chip *ngFor="let hashtag of hashtags" [removable]="removable" (removed)="remove(hashtag)">
+                    {{hashtag}}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="New hashtag..." [matChipInputFor]="chipGrid"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                    (matChipInputTokenEnd)="add($event)">
+            </mat-chip-grid>
+        </mat-form-field>
+        <div class="button-container">
+            <button mat-raised-button color="primary" (click)="upload()">Complete Upload</button>
+        </div>
+    </mat-step>
+</mat-horizontal-stepper>
+
+<mat-card class="f_card" *ngIf="uploadComplete">
+    <mat-card-header>
+        <mat-card-title>{{ photoTitle }}</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image [src]="uploadedPhotoUrl" alt="Photo">
+    <mat-card-content style="margin-top: 15px;">
+        <div>
+            <mat-chip-row>
+                <mat-chip *ngFor="let chip of hashChips">{{ chip }}</mat-chip>
+            </mat-chip-row>
+        </div>
+    </mat-card-content>
+    <mat-card-actions>
+        <div class="button-container">
+            <button mat-raised-button color="primary" (click)="closeDialog()">Confirm</button>
+        </div>
+    </mat-card-actions>
+</mat-card>

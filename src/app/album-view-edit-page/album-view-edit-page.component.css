@@ -1,0 +1,96 @@
+.photos-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  .available-photos-list, .album-photos-list {
+    width: 500px;
+    max-width: 100%;
+    border: solid 1px #ccc;
+    min-height: 60px;
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* This will create three columns */
+    grid-template-rows: repeat(2, 1fr); /* This will create two rows */
+    gap: 20px; /* Adjust the gap size as needed */
+    padding: 10px;
+  }
+  
+  .photos-box, .album-box {
+    padding: 20px 10px;
+    border: solid 1px #ccc;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    cursor: move;
+    background: white;
+    font-size: 14px;
+    flex-direction: unset;
+  }
+  
+  .cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+                0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  }
+  
+  .cdk-drag-placeholder {
+    opacity: 0;
+  }
+  
+  .cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+  .available-photos-list.cdk-drop-list-dragging .photos-box:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  .album-photos-list.cdk-drop-list-dragging .album-box:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .photos-box img, .album-box img {
+    max-width: 100px; /* Adjust as needed */
+    max-height: 100px; /* Adjust as needed */
+    object-fit: contain; /* This will ensure the image covers the area without stretching */
+    width: 100%; /* This will ensure the image is responsive within the container's width */
+    height: 100%; /* Maintain the aspect ratio */
+  }
+
+  .cdk-drag-preview img {
+    max-width: 100px; /* Adjust as needed */
+    max-height: 100px; /* Adjust as needed */
+    object-fit: contain; /* This will ensure the image covers the area without stretching */
+    width: 100%; /* This will ensure the image is responsive within the preview size */
+    height: auto; /* Maintain the aspect ratio */
+  }
+
+  .lightbox{
+    margin: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  button {
+    margin-right: 1em;
+  }
+  
+  gallery {
+    background-color: white !important;
+  }
+
+  .edit {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Adjust the gap between fields as needed */
+  }
+  
+  .search-field {
+    width: 100%; /* Adjust width as needed */
+  }

@@ -1,0 +1,41 @@
+.stepper-list{
+ width: 100%;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center; /* Aligns horizontally to center */
+    align-items: center; /* Aligns vertically to center */
+  }
+
+  .upload-button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Adjust the gap size as needed */
+    margin-top: 10px; /* Adds space between each group of buttons */
+  }
+
+  .f_card {
+    width: 100%; 
+    max-width: 90vw; 
+    max-height: 90vh; /* Set max height relative to the viewport height */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  img[mat-card-image] {
+    max-width: 100%; /* Ensure the image does not exceed the card's width */
+    max-height: 60vh; /* Adjust this value based on your card's header and footer size */
+    height: auto; /* Maintain the aspect ratio */
+    object-fit: contain; /* Ensures the image is fully visible, scaled down if necessary */
+    margin: 0 auto; /* Center the image */
+  }
+  
+  .mat-card-content {
+    overflow: auto; /* In case the content exceeds the card size */
+  }
+  
+  .mat-card-actions {
+    margin-top: auto; /* Push actions to the bottom of the card */
+  }

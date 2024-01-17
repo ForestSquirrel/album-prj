@@ -1,0 +1,53 @@
+<div *ngIf="album">
+    <div class="edit">
+        <mat-form-field class="search-field">
+            <mat-label>Title</mat-label>
+            <input matInput [(ngModel)]="editableTitle">
+        </mat-form-field>
+        <mat-form-field class="search-field">
+            <mat-label>Hashtags</mat-label>
+            <mat-chip-grid #chipGrid aria-label="Hashtag selection">
+                <mat-chip-row *ngFor="let hashtag of currentHashtags" (removed)="remove(hashtag)">
+                    {{hashtag}}
+                    <button matChipRemove [attr.aria-label]="'remove ' + hashtag">
+                        <mat-icon>cancel</mat-icon>
+                    </button>
+                </mat-chip-row>
+            </mat-chip-grid>
+            <input placeholder="New hashtag..." #hashtagInput [matChipInputFor]="chipGrid"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                (matChipInputTokenEnd)="add($event)" />
+        </mat-form-field>
+    </div>
+    <!-- Add more details about the album here -->
+    <div class="photos-container" *ngIf="isPhotos">
+        <div class="album-photos-list" cdkDropList #albumList="cdkDropList" [cdkDropListData]="albumPhotos"
+            [cdkDropListConnectedTo]="[photosList]" (cdkDropListDropped)="drop($event)">
+            <div class="album-box" *ngFor="let photo of albumPhotos" cdkDrag>
+                <img src="{{ photo.filePath }}" alt="{{ photo.title }}" />
+                <img *cdkDragPreview src="{{ photo.filePath }}" alt="{{ photo.title }}" />
+            </div>
+        </div>
+        <div class="available-photos-list" cdkDropList #photosList="cdkDropList" [cdkDropListData]="availablePhotos"
+            [cdkDropListConnectedTo]="[albumList]" (cdkDropListDropped)="drop($event)">
+            <div class="photos-box" *ngFor="let photo of availablePhotos" cdkDrag>
+                <img src="{{ photo.filePath }}" alt="{{ photo.title }}" />
+                <img *cdkDragPreview src="{{ photo.filePath }}" alt="{{ photo.title }}" />
+            </div>
+        </div>
+    </div>
+    <div class="g-container" *ngIf="!isPhotos">
+        <gallery id="test" imageSize="contain" [items]="items" thumbPosition="left" (itemClick)="onItemClick($event)">
+        </gallery>
+    </div>
+    <div class="lightbox">
+        <button mat-raised-button color="primary" (click)="lightbox.open(0)" *ngIf="!isPhotos">Open as widget</button>
+        <button mat-raised-button color="accent" (click)="lightbox.open(0, 'lightbox', {panelClass: 'fullscreen'})"
+            *ngIf="!isPhotos">
+            Open in fullscreen mode
+        </button>
+        <button mat-raised-button color="basic" (click)="onThumbSet()" *ngIf="isRelevant && !isPhotos"> Set as thumbnail </button>
+        <button mat-raised-button color="basic" (click)="onMetaSet()" *ngIf="isRelevant && !isPhotos"> Confirm title/hashtags changes </button>
+        <button mat-raised-button color="warn" (click)="addPhotos()">Manage Photos</button>
+    </div>
+</div>

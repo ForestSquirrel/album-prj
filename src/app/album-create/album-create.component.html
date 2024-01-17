@@ -1,0 +1,25 @@
+<mat-horizontal-stepper orientation="vertical" #stepper>
+    <mat-step>
+        <ng-template matStepLabel>Add Title</ng-template>
+        <mat-form-field class="stepper-list">
+            <input matInput placeholder="Title" [(ngModel)]="albumTitle">
+        </mat-form-field>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Add Hastags</ng-template>
+        <mat-form-field class="stepper-list">
+            <mat-chip-grid #chipGrid aria-label="Hashtag list">
+                <mat-chip *ngFor="let hashtag of hashtags" [removable]="removable" (removed)="remove(hashtag)">
+                    {{hashtag}}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="New hashtag..." [matChipInputFor]="chipGrid"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                    (matChipInputTokenEnd)="add($event)">
+            </mat-chip-grid>
+        </mat-form-field>
+        <div class="button-container">
+            <button mat-raised-button color="primary" (click)="create()">Create album</button>
+        </div>
+    </mat-step>
+</mat-horizontal-stepper>

@@ -1,0 +1,86 @@
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 200px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+body { 
+  font-family: Roboto, Arial, sans-serif;
+  margin: 0;
+}
+
+.lightbox{
+  margin: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+gallery {
+  background-color: white !important;
+}
+
+.search-fields-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Adjust the gap between fields as needed */
+}
+
+.search-field {
+  width: 100%; /* Adjust width as needed */
+}
+
+.albums-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 20px;
+  padding: 20px;
+}
+
+.album-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.mat-card-image {
+  width: 100%;
+  height: auto;
+  background-size: cover;
+}
+
+.mat-card-actions {
+  margin-top: auto;
+}
+
+.paginator-container {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  background-color: white;
+}
+
+.paginator-container button {
+  margin-right: 1em;
+  margin-left: 1em;
+}
+
+.paginator-container mat-paginator {
+  flex-grow: 1; /* Allows the paginator to grow and fill the available space */
+}

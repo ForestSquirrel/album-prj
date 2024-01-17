@@ -1,0 +1,32 @@
+<mat-card class="f_card">
+    <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input matInput [(ngModel)]="editableTitle" [disabled]="isDeleted">
+    </mat-form-field>
+
+    <img mat-card-image [src]="uploadedPhotoUrl" alt="Photo">
+
+    <mat-form-field>
+        <mat-label>Hashtags</mat-label>
+        <mat-chip-grid #chipGrid aria-label="Hashtag selection" [disabled]="isDeleted">
+          <mat-chip-row *ngFor="let hashtag of currentHashtags" (removed)="remove(hashtag)">
+            {{hashtag}}
+            <button matChipRemove [attr.aria-label]="'remove ' + hashtag">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+        </mat-chip-grid>
+        <input placeholder="New hashtag..." #hashtagInput
+          [matChipInputFor]="chipGrid"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes" 
+          [matChipInputAddOnBlur]="addOnBlur"
+          (matChipInputTokenEnd)="add($event)"
+          [disabled]="isDeleted"/>
+    </mat-form-field>
+
+    <mat-card-actions class= "button_layout">
+        <button mat-raised-button color="primary" (click)="confirmChanges()" [disabled]="isDeleted">Confirm</button>
+        <button mat-raised-button color="accent" (click)="closeDialog()">Close</button>
+        <button mat-raised-button color="warn" (click)="deletePhoto()" [disabled]="isDeleted">Delete</button>
+    </mat-card-actions>
+</mat-card>

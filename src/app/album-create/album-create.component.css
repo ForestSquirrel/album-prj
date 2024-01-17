@@ -1,0 +1,20 @@
+.stepper-list {
+    width: 100%;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    /* Aligns horizontally to center */
+    align-items: center;
+    /* Aligns vertically to center */
+}
+
+.upload-button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    /* Adjust the gap size as needed */
+    margin-top: 10px;
+    /* Adds space between each group of buttons */
+}

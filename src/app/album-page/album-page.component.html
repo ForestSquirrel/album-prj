@@ -1,0 +1,60 @@
+<div class="search-fields-container">
+  <mat-form-field class="search-field" appearance="fill">
+    <mat-label>Title search</mat-label>
+    <input type="text" matInput [formControl]="titleControl" [matAutocomplete]="autoTitle"
+      placeholder="Some photo title">
+    <mat-autocomplete #autoTitle="matAutocomplete">
+      <mat-option *ngFor="let title of filteredTitles | async" [value]="title">
+        {{ title }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Selected hashtags</mat-label>
+    <mat-chip-grid #chipGrid aria-label="Hashtag selection">
+      <mat-chip-row *ngFor="let hashtag of selectedHashtags" (removed)="remove(hashtag)">
+        {{hashtag}}
+        <button matChipRemove [attr.aria-label]="'remove ' + hashtag">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip-row>
+    </mat-chip-grid>
+    <input placeholder="New hashtag..." #hashtagInput [formControl]="hashtagCtrl" [matChipInputFor]="chipGrid"
+      [matAutocomplete]="auto" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      (matChipInputTokenEnd)="add($event)" />
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      <mat-option *ngFor="let hashtag of filteredHashtags | async" [value]="hashtag">
+        {{hashtag}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</div>
+<div class="container">
+  <!-- Layout for albums potentially with paginator -->
+  <div class="albums-grid">
+    <mat-card *ngFor="let album of items" class="album-card">
+      <mat-card-header>
+        <mat-card-title>{{album.title}}</mat-card-title>
+      </mat-card-header>
+      <img mat-card-image [src]="album.thumbPath || emptyThumbURL" alt="Thumbnail">
+      <mat-card-content>
+        <mat-chip-grid>
+          <mat-chip-row *ngFor="let hashtag of album.hashtags.split(';')">{{hashtag}}</mat-chip-row>
+        </mat-chip-grid>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button (click)="openAlbum(album.id)">Open</button>
+        <button mat-button color="warn" (click)="deleteAlbum(album.id)">Delete</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div class="paginator-container">
+    <button mat-raised-button color="warn" (click)="openCreateDialog()">Create Album</button>
+    <mat-paginator [length]="items.length" 
+                   [pageSize]="5" 
+                   [pageSizeOptions]="[5, 10, 20]" 
+                   (page)="handlePageEvent($event)">
+    </mat-paginator>
+  </div>
+</div>
